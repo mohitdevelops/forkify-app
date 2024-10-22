@@ -8,9 +8,12 @@ import 'regenerator-runtime/runtime';
 
 const recipeContainer = document.querySelector('.recipe');
 
-// https://forkify-api.herokuapp.com/v2
+if (module.hot) {
+  module.hot.accept();
+}
 
-///////////////////////////////////////
+
+console.log(module.hot.accept);
 
 const recipeController = async () => {
   try {
@@ -38,7 +41,8 @@ const searchControlHandler = async () => {
 
     //Load
     await model.loadSearchRecipeHandler(query);
-    console.log(model.state.search.result);
+    // console.log(model.state.search.result);
+    ResultView.render(model.state.search.result);
   } catch (err) {
     console.log(err);
   }
