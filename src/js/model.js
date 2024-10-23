@@ -6,6 +6,8 @@ export const state = {
   search: {
     query: '',
     result: [],
+    page: 1,
+    resultPerPage: 10,
   },
 };
 
@@ -41,4 +43,16 @@ export const loadSearchRecipeHandler = async search => {
       };
     });
   } catch (err) {}
+};
+
+export const getSearchResults = function (page = state.search.page) {
+  state.search.page = page;
+
+  const start = (page - 1) * +state.search.resultPerPage;
+  const end = page * +state.search.resultPerPage;
+
+  console.log(page);
+  // console.log(end);
+
+  return state.search.result.slice(start, end);
 };

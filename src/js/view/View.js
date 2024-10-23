@@ -23,7 +23,7 @@ export default class View {
                 <use href="${svgIcons}#icon-loader"></use>
               </svg>
             </div>`;
-    this._parentElement.innerHML = '';
+    this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', domMarkup);
   };
 
