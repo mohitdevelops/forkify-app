@@ -60,7 +60,8 @@ const controlPagination = page => {
 const handleControlServings = function (newServings) {
   model.handleUpdateServings(newServings);
 
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 const init = function () {
