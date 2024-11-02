@@ -21,6 +21,8 @@ const recipeController = async () => {
     // 1. Loading Data
     await model.loadRecipe(recipeId);
 
+    ResultView.update(model.getSearchResults());
+
     // 2.Recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
