@@ -42,7 +42,10 @@ export const loadSearchRecipeHandler = async search => {
         publisher: item.publisher,
       };
     });
-  } catch (err) {}
+    state.search.page = 1;
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const getSearchResults = function (page = state.search.page) {
