@@ -66,9 +66,15 @@ const handleControlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+const bookmarkHandler = function () {
+  model.addBookmark(model.state.recipe);
+  console.log('😋', model.state.recipe);
+};
+
 const init = function () {
   recipeView.addHandlerRenderRecipe(recipeController);
   recipeView.addServings(handleControlServings);
+  recipeView.addBookmarkHandler(bookmarkHandler);
   searchView.searchHandler(searchControlHandler);
   PaginationView.handlePaginationClick(controlPagination);
 };
