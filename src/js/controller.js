@@ -1,4 +1,5 @@
 import * as model from './model';
+import bookMarksView from './view/bookMarksView';
 import PaginationView from './view/PaginationView';
 import recipeView from './view/recipe-view';
 import ResultView from './view/ResultView';
@@ -22,6 +23,7 @@ const recipeController = async () => {
     await model.loadRecipe(recipeId);
 
     ResultView.update(model.getSearchResults());
+    bookMarksView.update(model.state.bookmarks)
 
     // 2.Recipe
     recipeView.render(model.state.recipe);
@@ -67,8 +69,15 @@ const handleControlServings = function (newServings) {
 };
 
 const bookmarkHandler = function () {
-  model.addBookmark(model.state.recipe);
-  console.log('😋', model.state.recipe);
+  //Add Bookmark
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.removeBookmark(model.state.recipe.id);
+
+  //Update recipe view
+  recipeView.update(model.state.recipe);
+
+  //Render Bookmarks
+  bookMarksView.render(model.state.bookmarks);
 };
 
 const init = function () {
