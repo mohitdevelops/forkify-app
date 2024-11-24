@@ -6,10 +6,19 @@ const timeout = function (s) {
   });
 };
 
-export const getJSON = async url => {
+export const AJAX = async function (url, uploadData = undefined) {
   try {
-    const response = await Promise.race([fetch(url), timeout(5)]);
+    const fetchPro = uploadData
+      ? fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(uploadData),
+        })
+      : fetch(url);
+
+    const response = await Promise.race([fetchPro, timeout(4)]);
     const data = await response.json();
+
     if (!response.ok) throw new Error(`${data.message} (${response.status})`);
     return data;
   } catch (err) {
@@ -17,18 +26,29 @@ export const getJSON = async url => {
   }
 };
 
-export const sendJSON = async (url, uploadData) => {
-  try {
-    const fetchPro = fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(uploadData),
-    });
-    const response = await Promise.race([fetchPro, timeout(4)]);
-    const data = await response.json();
-    if (!response.ok) throw new Error(`${data.message} (${response.status})`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
+// export const getJSON = async url => {
+//   try {
+//     const response = await Promise.race([fetch(url), timeout(5)]);
+//     const data = await response.json();
+//     if (!response.ok) throw new Error(`${data.message} (${response.status})`);
+//     return data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
+
+// export const sendJSON = async (url, uploadData) => {
+//   try {
+//     const fetchPro = fetch(url, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify(uploadData),
+//     });
+//     const response = await Promise.race([fetchPro, timeout(4)]);
+//     const data = await response.json();
+//     if (!response.ok) throw new Error(`${data.message} (${response.status})`);
+//     return data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };

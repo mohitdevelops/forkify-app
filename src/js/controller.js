@@ -31,7 +31,7 @@ const recipeController = async () => {
     // 3.Recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
-    recipeView.renderError();
+    recipeView.renderMessage();
     console.error(err);
   }
 };
@@ -90,7 +90,28 @@ const controlBookmars = () => {
 
 const controlUploadRecipe = async function (newRecipe) {
   try {
+    //loader
+    addRecipeView.loader();
+
     await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    //Render recipe
+    recipeView.render(model.state.recipe);
+
+    //Succes Message
+    addRecipeView.renderMessage();
+
+    //Render Bookmar
+    bookMarksView.render(model.state.bookmarks);
+
+    //Change ID in URL
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
+    //Close form
+    setTimeout(() => {
+      addRecipeView.toggleWindow();
+    }, 2000);
   } catch (err) {
     addRecipeView.renderError(err.message);
   }
